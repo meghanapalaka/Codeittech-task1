@@ -1,0 +1,130 @@
+Name:PALAKA MEGHANA
+Company:CODEITTECH SOLUTIONS 
+ID::CT12DS2421
+Domain:PYTHON PROGRAMMING 
+Duration:15 SEPT TO 15 NOV 2024
+
+
+OVERVIEW OF THE PROJECT:Simple Student Grade Tracker
+
+The **Simple Student Grade Tracker** is a Python-based console application designed to help students or educators track and manage academic performance across multiple subjects. The program allows users to input grades for different subjects, calculates the average grade, assigns a letter grade, and determines the corresponding GPA based on the standard scale. After processing the data, the application generates a detailed grade report.
+
+Key Features:
+
+1. **Grade Input and Validation:**
+   - Users are prompted to enter the name and grade for each subject.
+   - The program validates that grades are numeric and fall within a valid range (0-100).
+   - Users can type "done" to stop entering grades, after which the program proceeds to calculate the results.
+
+2. **Average Grade Calculation:**
+   - The program computes the average of the entered grades using the `calculate_average()` function. If no grades are entered, the average is set to 0.
+
+3. **Letter Grade Assignment:**
+   - Based on the calculated average, the program assigns a letter grade using the `determine_letter_grade()` function. The grading scale is as follows:
+     - A: 90 and above
+     - B: 80-89
+     - C: 70-79
+     - D: 60-69
+     - F: Below 60
+
+4. **GPA Calculation:**
+   - The program maps the letter grade to a GPA score using the `determine_gpa()` function. The GPA scale is as follows:
+     - A = 4.0
+     - B = 3.0
+     - C = 2.0
+     - D = 1.0
+     - F = 0.0
+
+5. **Grade Report Display:**
+   - Once the grades have been processed, the program displays a grade report, which includes:
+     - The list of subjects and their corresponding grades.
+     - The average grade.
+     - The assigned letter grade.
+     - The calculated GPA.
+
+6. **Error Handling:**
+   - The program ensures that input grades are numeric and within a valid range. It also handles cases where the user inputs invalid data, such as non-numeric values.
+ Technologies Used:
+- **Programming Language:** Python
+- **Core Functions:** The project utilizes core functions to structure and organize the logic:
+  - `calculate_average()`: Computes the average of the grades.
+  - `determine_letter_grade()`: Assigns a letter grade based on the average score.
+  - `determine_gpa()`: Converts the letter grade into a GPA score.
+  - `display_results()`: Outputs the grade report.
+
+
+
+CODE:
+# Simple Student Grade Tracker
+
+def calculate_average(grades):
+    """Calculates the average of the grades"""
+    if not grades:
+        return 0
+    return sum(grades) / len(grades)
+
+def determine_letter_grade(average):
+    """Determines the letter grade based on the average score"""
+    if average >= 90:
+        return 'A'
+    elif average >= 80:
+        return 'B'
+    elif average >= 70:
+        return 'C'
+    elif average >= 60:
+        return 'D'
+    else:
+        return 'F'
+
+def determine_gpa(letter_grade):
+    """Maps the letter grade to GPA"""
+    gpa_scale = {
+        'A': 4.0,
+        'B': 3.0,
+        'C': 2.0,
+        'D': 1.0,
+        'F': 0.0
+    }
+    return gpa_scale[letter_grade]
+
+def display_results(subject_grades, average, letter_grade, gpa):
+    """Displays the grade report"""
+    print("\nGrade Report")
+    print("-" * 30)
+    for subject, grade in subject_grades.items():
+        print(f"{subject}: {grade}")
+    print(f"\nAverage Grade: {average:.2f}")
+    print(f"Letter Grade: {letter_grade}")
+    print(f"GPA: {gpa:.2f}")
+    print("-" * 30)
+
+def grade_tracker():
+    print("Welcome to the Student Grade Tracker!")
+    
+    subject_grades = {}
+    
+    while True:
+        subject = input("Enter the subject name (or type 'done' to finish): ").strip()
+        if subject.lower() == 'done':
+            break
+        
+        try:
+            grade = float(input(f"Enter the grade for {subject} (0-100): "))
+            if 0 <= grade <= 100:
+                subject_grades[subject] = grade
+            else:
+                print("Please enter a valid grade between 0 and 100.")
+        except ValueError:
+            print("Invalid input! Please enter a numerical grade.")
+    
+    if not subject_grades:
+        print("No grades entered.")
+    else:
+        grades = list(subject_grades.values())
+        average = calculate_average(grades)
+        letter_grade = determine_letter_grade(average)
+        gpa = determine_gpa(letter_grade)
+        display_results(subject_grades, average, letter_grade, gpa)
+
+if __name__ == "__main__":
+    grade_tracker()
